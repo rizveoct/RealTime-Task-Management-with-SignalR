@@ -1,0 +1,11 @@
+<div class="shell">
+  <aside class="sidebar">
+    <h1 class="logo">RTM</h1>
+    <nav>
+      <a *ngFor="let link of navLinks" [routerLink]="link.path" routerLinkActive="active">{{ link.label }}</a>
+    </nav>
+  </aside>
+  <main class="content">
+    <router-outlet></router-outlet>
+  </main>
+</div>
