@@ -1,13 +1,14 @@
+
 using System.Collections.Generic;
+
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TaskManagement.Application.Features.Tasks.Commands.CreateTask;
-using TaskManagement.Application.Features.Tasks.Commands.DeleteTask;
-using TaskManagement.Application.Features.Tasks.Commands.UpdateTask;
+
 using TaskManagement.Application.Features.Tasks.Queries;
 using TaskManagement.Application.Features.Tasks.Queries.GetTaskById;
-using TaskManagement.Application.Features.Tasks.Queries.GetTasksByBoardId;
+
 
 namespace TaskManagement.API.Controllers;
 
@@ -43,6 +44,7 @@ public sealed class TasksController : ControllerBase
 
         return Ok(task);
     }
+
 
     [HttpGet("board/{boardId:guid}")]
     [ProducesResponseType(typeof(IReadOnlyCollection<TaskDto>), StatusCodes.Status200OK)]
@@ -80,4 +82,5 @@ public sealed class TasksController : ControllerBase
 
         return NoContent();
     }
+
 }

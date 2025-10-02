@@ -29,6 +29,7 @@ public static class DependencyInjection
         services.AddScoped<ITaskRepository, TaskRepository>();
         services.AddScoped<IProjectRepository, ProjectRepository>();
         services.AddScoped<IBoardRepository, BoardRepository>();
+
         services.AddScoped<IDomainEventDispatcher, DomainEventDispatcher>();
         services.AddHttpContextAccessor();
         services.AddScoped<ICurrentUserService, CurrentUserService>();
@@ -56,12 +57,14 @@ public static class DependencyInjection
 
                 options.Events = new JwtBearerEvents
                 {
-                    OnAuthenticationFailed = context =>
+                    OnAuthenticationFailed = ctx =>
                     {
-                        Log.Warning(context.Exception, "Authentication failed for {Token}", context.Token);
+                        Log.Warning(ctx.Exception, "JWT authentication failed");
                         return Task.CompletedTask;
                     }
                 };
+
+
             });
 
         services.AddAuthorization();

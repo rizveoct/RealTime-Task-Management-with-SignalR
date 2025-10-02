@@ -1,5 +1,7 @@
 using TaskManagement.Domain.Common;
 using TaskManagement.Domain.Enumerations;
+using TaskStatus = TaskManagement.Domain.Enumerations.TaskStatus;
+
 
 namespace TaskManagement.Domain.Entities;
 

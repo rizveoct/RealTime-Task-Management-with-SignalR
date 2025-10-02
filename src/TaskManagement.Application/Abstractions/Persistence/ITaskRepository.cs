@@ -9,4 +9,5 @@ public interface ITaskRepository
     Task<TaskItem?> GetByIdWithTrackingAsync(Guid id, CancellationToken cancellationToken = default);
     Task<IReadOnlyList<TaskItem>> GetByBoardIdAsync(Guid boardId, CancellationToken cancellationToken = default);
     void Remove(TaskItem task);
+
 }
