@@ -1,4 +1,5 @@
 using TaskManagement.Domain.Enumerations;
+using TaskStatus = TaskManagement.Domain.Enumerations.TaskStatus;
 
 namespace TaskManagement.Application.Features.Tasks.Queries;
 

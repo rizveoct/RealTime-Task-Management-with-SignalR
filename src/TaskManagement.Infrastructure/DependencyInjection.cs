@@ -55,12 +55,13 @@ public static class DependencyInjection
 
                 options.Events = new JwtBearerEvents
                 {
-                    OnAuthenticationFailed = context =>
+                    OnAuthenticationFailed = ctx =>
                     {
-                        Log.Warning(context.Exception, "Authentication failed for {Token}", context.Token);
+                        Log.Warning(ctx.Exception, "JWT authentication failed");
                         return Task.CompletedTask;
                     }
                 };
+
             });
 
         services.AddAuthorization();
