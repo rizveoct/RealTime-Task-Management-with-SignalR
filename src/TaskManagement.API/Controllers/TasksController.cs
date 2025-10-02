@@ -1,9 +1,14 @@
+
+using System.Collections.Generic;
+
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TaskManagement.Application.Features.Tasks.Commands.CreateTask;
+
 using TaskManagement.Application.Features.Tasks.Queries;
 using TaskManagement.Application.Features.Tasks.Queries.GetTaskById;
+
 
 namespace TaskManagement.API.Controllers;
 
@@ -39,4 +44,43 @@ public sealed class TasksController : ControllerBase
 
         return Ok(task);
     }
+
+
+    [HttpGet("board/{boardId:guid}")]
+    [ProducesResponseType(typeof(IReadOnlyCollection<TaskDto>), StatusCodes.Status200OK)]
+    public async Task<ActionResult<IReadOnlyCollection<TaskDto>>> GetTasksForBoard(Guid boardId, CancellationToken cancellationToken)
+    {
+        var tasks = await _mediator.Send(new GetTasksByBoardIdQuery(boardId), cancellationToken);
+        return Ok(tasks);
+    }
+
+    [HttpPut("{taskId:guid}")]
+    [ProducesResponseType(typeof(TaskDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<TaskDto>> UpdateTask(Guid taskId, [FromBody] UpdateTaskCommand command, CancellationToken cancellationToken)
+    {
+        command.TaskId = taskId;
+        var updatedTask = await _mediator.Send(command, cancellationToken);
+        if (updatedTask is null)
+        {
+            return NotFound();
+        }
+
+        return Ok(updatedTask);
+    }
+
+    [HttpDelete("{taskId:guid}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> DeleteTask(Guid taskId, CancellationToken cancellationToken)
+    {
+        var deleted = await _mediator.Send(new DeleteTaskCommand(taskId), cancellationToken);
+        if (!deleted)
+        {
+            return NotFound();
+        }
+
+        return NoContent();
+    }
+
 }

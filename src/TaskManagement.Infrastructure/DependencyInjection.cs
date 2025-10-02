@@ -28,6 +28,8 @@ public static class DependencyInjection
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<ITaskRepository, TaskRepository>();
         services.AddScoped<IProjectRepository, ProjectRepository>();
+        services.AddScoped<IBoardRepository, BoardRepository>();
+
         services.AddScoped<IDomainEventDispatcher, DomainEventDispatcher>();
         services.AddHttpContextAccessor();
         services.AddScoped<ICurrentUserService, CurrentUserService>();
@@ -61,6 +63,7 @@ public static class DependencyInjection
                         return Task.CompletedTask;
                     }
                 };
+
 
             });
 
